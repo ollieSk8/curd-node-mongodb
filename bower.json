@@ -1,0 +1,13 @@
+{
+  "name": "curd-node-mongodb",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "ollie"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}
