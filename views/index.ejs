@@ -7,6 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>curd-node-mongodb</title>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="bootstrap/js/jquery-3.2.0.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="bootstrap/js/app.js"></script>
 </head>
 <body>
     <div class="container">
@@ -14,14 +17,88 @@
         <form action="/quotes" method="POST">
             <div class="form-group">
                 <label for="name">姓名</label>
-                <input type="text" class="form-control" id="name" placeholder="请输入名字">
+                <input type="text" class="form-control" id="name" placeholder="请输入名字" name="name">
             </div>
             <div class="form-group">
                 <label for="quote">留言</label>
-                <input type="text" class="form-control" id="quote" placeholder="留言">
+                <input type="text" class="form-control" id="quote" placeholder="留言" name="quote">
             </div>
             <button type="submit" class="btn btn-primary">提交</button>
         </form>
+        <hr>
+        <h2>留言表</h2>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>名字</th>
+                <th>留言</th>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+                <% for(var i=0; i<quotes.length; i++) {%>
+                <tr>
+                    <th scope="row"><%= i+1 %></th>
+                    <td><%= quotes[i].name %></td>
+                    <td><%= quotes[i].quote %></td>
+                    <td>
+                        <button type="button" class="btn btn-primary btn-sm edit-btn"
+                                data-target="#edit-modal"
+                                data-name="<%= quotes[i].name %>"
+                                data-quote="<%= quotes[i].quote %>"
+                        >修改</button>
+                        <button type="button" class="btn btn-danger btn-sm delete-btn"
+                                data-target="#delete-modal"
+                                data-id="<%= quotes[i].id %>"
+                                data-name="<%= quotes[i].name %>"
+                                data-quote="<%= quotes[i].quote %>"
+                        >删除</button>
+                    </td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
     </div>
+    <!--删除模态框-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="delete-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title delete-title"></h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-danger" id="confirm-btn">确定删除</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!--编辑模态框-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="edit-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title edit-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="fix-name">姓名</label>
+                        <input type="text" class="form-control" id="fix-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="fix-quote">留言</label>
+                        <input type="text" class="form-control" id="fix-quote">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-danger" id="confirm-edit-btn">确定修改</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </body>
 </html>
